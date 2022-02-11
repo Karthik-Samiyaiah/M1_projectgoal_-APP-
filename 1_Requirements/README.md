@@ -1,15 +1,16 @@
 # Requirements
 ## Introduction
- --- Bank Management system : With this project, user can perform banking activities like in real bank. This perticular file contains all the details of requirement collection from user end.
+ --- Online Banking Application : With this project, user can perform banking activities through online apllication. This file contains all the details of requirement collection from user end.
 
 
 ## SWOT ANALYSIS
 **Strength**
 -- User can have all the banking Activities.
-  * Depositing Amount
-  * Withdrawing Amount
-  * Viewing Details
-  * Foreign Exchange  
+  * Creating new account
+  * cash deposit
+  * cash withdrawal
+  * Display account Information
+  * Logout
 
 **Weakness**
 -- If the password is wrong No activities can be done.
@@ -28,7 +29,7 @@
 
 ## What:
 
-**Bank management sysem is mainly concerned to Cover the major Banking activities in sigle application.**
+**Online Banking Application is mainly designed to Cover the major Banking activities in sigle application.**
 
 ## When:
 
@@ -40,7 +41,7 @@
 
 ## How:
 
-**Implementation is done using C language. And also used multifile concept.**
+**Implementation is done using C language.**
 
 # Detail requirements
 ## High Level Requirements:
