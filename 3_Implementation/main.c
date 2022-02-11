@@ -1,6 +1,5 @@
-
- #include "bank.h"
- #include "header.h"
+#include "bank.h"
+#include "header.h"
 #include "unity/unity.h"
 #include "assert.h"
 #include "dollar.h"
