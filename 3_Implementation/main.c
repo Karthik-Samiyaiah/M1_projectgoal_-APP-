@@ -1,107 +1,146 @@
-#include "bank.h"
-#include "header.h"
-#include "unity/unity.h"
-#include "assert.h"
-#include "dollar.h"
-#include "euro.h"
- void menu(void)  
- {
-  int ch;  
- 
- printf("\n************************* Welcome to Your Banking Application ******************************\t");
- printf("\nPlease select your required service...");  
- printf("\n 1. For New Account opening \n 2. For Already Existing customer \n 3. Exit");  
- scanf("%d",&ch);  
- switch (ch)  
-   {
-    case 1: new_customer();
-    break;
-    case 2: existing_customer();
-    break;   
-    default:  
-    exit(0);  
-  }  
- }
+#include <stdio.h>
 
- void fordelay(int j)
-{   int i,k;
-    for(i=0;i<j;i++)
-         k=i;
-}
-void setUp()
+struct customer
 {
+    int account_no;
+    char name[80];
+    int balance;
+};
 
-}
-void tearDown()
+void accept(struct customer[], int);
+void display(struct customer[], int);
+int search(struct customer[], int, int);
+void deposit(struct customer[], int, int, int);
+void withdraw(struct customer[], int, int, int);
+
+int main()
 {
+    struct customer data[20];
+    int n, choice, account_no, amount, index;
 
-}
-void test_doller(void)
-{
-    int n1 = 500, n2 = 75;
-    TEST_ASSERT_EQUAL(6.8, dollar(n1,n2));
-    TEST_ASSERT_EQUAL(0.15, dollar(n2,n1));
-    
-}
-void test_euro(void)
-{
-    int n3 = 500, n4 = 87;
-    TEST_ASSERT_EQUAL(5.7, euro(n3,n4));
-    
-    
-}
- int main(void)
-{   
-     /*required by the unity test framework*/
-    UNITY_BEGIN();
-    /*required by the unity test framework*/
-    RUN_TEST(test_doller);
-    RUN_TEST(test_euro);
-    /*required by the unity test framework*/
-    UNITY_END();
+    printf("Banking System\n\n");
+    printf("Number of customer records you want to enter? : ");
+    scanf("%d", &n);
+    accept(data, n);
+    do
+    {
 
-
-
-    int main_exit;
-    char pass[10],password[10]="karthik";
-    int i=0;
-    printf("\n\n\t\tEnter the password to login:");
-    scanf("%s",pass);
-    
-
-    if (strcmp(pass,password)==0)
-        {printf("\n\nPassword Match!\nLOADING");
-        for(i=0;i<=6;i++)
+        printf("\nBanking System Menu :\n");
+        printf("Press 1 to display all records.\n");
+        printf("Press 2 to search a record.\n");
+        printf("Press 3 to deposit amount.\n");
+        printf("Press 4 to withdraw amount.\n");
+        printf("Press 0 to exit\n");
+        printf("\nEnter choice(0-4) : ");
+        scanf("%d", &choice);
+        switch (choice)
         {
-            fordelay(100000000);
-            printf(".");
+            case 1:
+                display(data, n);
+                break;
+            case 2:
+                printf("Enter account number to search : ");
+                scanf("%d", &account_no);
+                index = search(data, n, account_no);
+                if (index ==  - 1)
+                {
+                    printf("Record not found : ");
+                }
+                else
+                {
+                    printf("A/c Number: %d\nName: %s\nBalance: %d\n",
+                        data[index].account_no, data[index].name,
+                        data[index].balance);
+                }
+                break;
+            case 3:
+                printf("Enter account number : ");
+                scanf("%d", &account_no);
+                printf("Enter amount to deposit : ");
+                scanf("%d", &amount);
+                deposit(data, n, account_no, amount);
+                break;
+            case 4:
+                printf("Enter account number : ");
+                scanf("%d", &account_no);
+                printf("Enter amount to withdraw : ");
+                scanf("%d", &amount);
+                withdraw(data, n, account_no, amount);
         }
-                system("cls");
-            menu();
-        }
+    }
+    while (choice != 0);
+
+    return 0;
+}
+
+void accept(struct customer list[80], int s)
+{
+    int i;
+    for (i = 0; i < s; i++)
+    {
+        printf("\nEnter data for Record #%d", i + 1);
+
+        printf("\nEnter account_no : ");
+        scanf("%d", &list[i].account_no);
+        fflush(stdin);
+        printf("Enter name : ");
+        gets(list[i].name);
+        list[i].balance = 0;
+    } 
+}
+
+void display(struct customer list[80], int s)
+{
+    int i;
+
+    printf("\n\nA/c No\tName\tBalance\n");
+    for (i = 0; i < s; i++)
+    {
+        printf("%d\t%s\t%d\n", list[i].account_no, list[i].name,
+            list[i].balance);
+    } 
+}
+
+int search(struct customer list[80], int s, int number)
+{
+    int i;
+
+    for (i = 0; i < s; i++)
+    {
+        if (list[i].account_no == number)
+        {
+            return i;
+        } 
+    }
+    return  - 1;
+}
+
+void deposit(struct customer list[], int s, int number, int amt)
+{
+    int i = search(list, s, number);
+    if (i ==  - 1)
+    {
+        printf("Record not found");
+    } 
     else
-        {   printf("\n\nWrong password!!\a\a\a");
-            login_try:
-            printf("\nEnter 1 to try again and 0 to exit:");
-            scanf("%d",&main_exit);
-            if (main_exit==1)
-                    {
+    {
+        list[i].balance += amt;
+    }
+}
 
-                        system("cls");
-                        main();
-                    }
-
-            else if (main_exit==0)
-                    {
-                    system("cls");
-                    }
-            else
-                    {printf("\nInvalid!");
-                    fordelay(1000000000);
-                    system("cls");
-                    goto login_try;}
-
-        }
-       
-        return 0;
+void withdraw(struct customer list[], int s, int number, int amt)
+{
+    int i = search(list, s, number);
+    if (i ==  - 1)
+    {
+        printf("Record not found\n");
+    } 
+    else if (list[i].balance < amt)
+    {
+        printf("Insufficient balance\n");
+    }
+    else
+    {
+        list[i].balance -= amt;
+    }
 }
