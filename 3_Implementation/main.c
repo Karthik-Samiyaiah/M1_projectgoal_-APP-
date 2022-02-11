@@ -1,13 +1,4 @@
- /**
- * @file choice.c
- * @author Ankita Nagaraj Kondagoli
- * @brief 
- * @version 0.1
- * @date 2021-09-06
- * 
- * @copyright Copyright (c) 2021
- * 
- */
+
  #include "bank.h"
  #include "header.h"
 #include "unity/unity.h"
@@ -73,7 +64,7 @@ void test_euro(void)
 
 
     int main_exit;
-    char pass[10],password[10]="ankitalnt";
+    char pass[10],password[10]="karthik";
     int i=0;
     printf("\n\n\t\tEnter the password to login:");
     scanf("%s",pass);
