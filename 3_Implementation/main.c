@@ -1,146 +1,192 @@
 #include <stdio.h>
-
-struct customer
+#include <conio.h>
+#include <string.h>
+#include <stdlib.h>
+ 
+struct acc_type
 {
-    int account_no;
-    char name[80];
-    int balance;
+     char bank_name[20];
+     char bank_branch[20];
+     char acc_holder_name[30];
+     int acc_number;
+     char acc_holder_address[100];
+     float available_balance;     
 };
-
-void accept(struct customer[], int);
-void display(struct customer[], int);
-int search(struct customer[], int, int);
-void deposit(struct customer[], int, int, int);
-void withdraw(struct customer[], int, int, int);
-
+struct acc_type account[20];
+int num_acc;
+ 
+void Create_new_account();
+void Cash_Deposit();
+void Cash_withdrawl();
+void Account_information();
+void Log_out();
+void display_options();
+ 
 int main()
 {
-    struct customer data[20];
-    int n, choice, account_no, amount, index;
-
-    printf("Banking System\n\n");
-    printf("Number of customer records you want to enter? : ");
-    scanf("%d", &n);
-    accept(data, n);
-    do
+    char option;
+    char f2f[50] = "http://fresh2refresh.com/";
+    num_acc=0;
+    while(1)
     {
-
-        printf("\nBanking System Menu :\n");
-        printf("Press 1 to display all records.\n");
-        printf("Press 2 to search a record.\n");
-        printf("Press 3 to deposit amount.\n");
-        printf("Press 4 to withdraw amount.\n");
-        printf("Press 0 to exit\n");
-        printf("\nEnter choice(0-4) : ");
-        scanf("%d", &choice);
-        switch (choice)
+       printf("\n***** Welcome to Bank Application *****\n");
+       printf("\nThis demo program is brought you by %s",f2f);
+       display_options();
+       printf("Please enter any options (1/2/3/4/5/6) ");
+       printf("to continue : ");
+ 
+        option = getch();
+        printf("%c \n", option);
+        switch(option)
         {
-            case 1:
-                display(data, n);
-                break;
-            case 2:
-                printf("Enter account number to search : ");
-                scanf("%d", &account_no);
-                index = search(data, n, account_no);
-                if (index ==  - 1)
-                {
-                    printf("Record not found : ");
-                }
-                else
-                {
-                    printf("A/c Number: %d\nName: %s\nBalance: %d\n",
-                        data[index].account_no, data[index].name,
-                        data[index].balance);
-                }
-                break;
-            case 3:
-                printf("Enter account number : ");
-                scanf("%d", &account_no);
-                printf("Enter amount to deposit : ");
-                scanf("%d", &amount);
-                deposit(data, n, account_no, amount);
-                break;
-            case 4:
-                printf("Enter account number : ");
-                scanf("%d", &account_no);
-                printf("Enter amount to withdraw : ");
-                scanf("%d", &amount);
-                withdraw(data, n, account_no, amount);
+          case '1': Create_new_account();
+                    break;
+          case '2': Cash_Deposit();
+                    break;
+          case '3': Cash_withdrawl();
+                    break;
+          case '4': Account_information();
+                    break;
+          case '5': return 0;
+          case '6': system("cls");
+                    break;
+          default : system("cls");
+                    printf("Please enter one of the options");
+                    printf("(1/2/3/4/5/6) to continue \n ");
+                    break;
         }
     }
-    while (choice != 0);
-
     return 0;
 }
-
-void accept(struct customer list[80], int s)
+ 
+/*Function to display available options in this application*/
+ 
+void display_options()
 {
-    int i;
-    for (i = 0; i < s; i++)
-    {
-        printf("\nEnter data for Record #%d", i + 1);
-
-        printf("\nEnter account_no : ");
-        scanf("%d", &list[i].account_no);
-        fflush(stdin);
-        printf("Enter name : ");
-        gets(list[i].name);
-        list[i].balance = 0;
-    } 
+    printf("\n1. Create new account \n");
+    printf("2. Cash Deposit \n");
+    printf("3. Cash withdrawl \n");
+    printf("4. Account information \n");
+    printf("5. Log out \n");
+    printf("6. Clear the screen and display available ");
+    printf("options \n\n");
 }
-
-void display(struct customer list[80], int s)
+  
+void Create_new_account()
 {
-    int i;
-
-    printf("\n\nA/c No\tName\tBalance\n");
-    for (i = 0; i < s; i++)
-    {
-        printf("%d\t%s\t%d\n", list[i].account_no, list[i].name,
-            list[i].balance);
-    } 
+   char bank_name[20];
+   char bank_branch[20];
+   char acc_holder_name[30];
+   int acc_number;
+   char acc_holder_address[100];
+   float available_balance = 0;
+   fflush(stdin);     
+   printf("\nEnter the bank name              : ");
+   scanf("%s", &bank_name);
+   printf("\nEnter the bank branch            : ");
+   scanf("%s", &bank_branch);
+   printf("\nEnter the account holder name    : ");
+   scanf("%s", &acc_holder_name);
+   printf("\nEnter the account number(1 to 10): ");
+   scanf("%d", &acc_number);
+   printf("\nEnter the account holder address : ");
+   scanf("%s", &acc_holder_address);
+ 
+   strcpy(account[acc_number-1].bank_name,bank_name);
+   strcpy(account[acc_number-1].bank_branch,bank_branch);
+   strcpy(account[acc_number-1].acc_holder_name,
+   acc_holder_name);
+   account[acc_number-1].acc_number=acc_number;
+   strcpy(account[acc_number-1].acc_holder_address,
+   acc_holder_address);
+   account[acc_number-1].available_balance=available_balance;
+ 
+   printf("\nAccount has been created successfully \n\n");
+   printf("Bank name              : %s \n" , 
+   account[acc_number-1].bank_name);
+   printf("Bank branch            : %s \n" , 
+   account[acc_number-1].bank_branch);
+   printf("Account holder name    : %s \n" , 
+   account[acc_number-1].acc_holder_name);
+   printf("Account number         : %d \n" , 
+   account[acc_number-1].acc_number);
+   printf("Account holder address : %s \n" , 
+   account[acc_number-1].acc_holder_address);
+   printf("Available balance      : %f \n" , 
+   account[acc_number-1].available_balance);
+ 
+   //num_acc++;
+ 
 }
-
-int search(struct customer list[80], int s, int number)
+ 
+// Displaying account informations
+ 
+void Account_information()
 {
-    int i;
-
-    for (i = 0; i < s; i++)
-    {
-        if (list[i].account_no == number)
-        {
-            return i;
-        } 
-    }
-    return  - 1;
+     register int num_acc = 0;
+     //if (!strcmp(customer,account[count].name))
+     while(strlen(account[num_acc].bank_name)>0)
+     {
+         printf("\nBank name                : %s \n" , 
+         account[num_acc].bank_name);
+         printf("Bank branch              : %s \n" , 
+         account[num_acc].bank_branch);
+         printf("Account holder name      : %s \n" , 
+         account[num_acc].acc_holder_name);
+         printf("Account number           : %d \n" , 
+         account[num_acc].acc_number);
+         printf("Account holder address   : %s \n" , 
+         account[num_acc].acc_holder_address);
+         printf("Available balance        : %f \n\n" , 
+         account[num_acc].available_balance);
+         num_acc++;
+     }
 }
-
-void deposit(struct customer list[], int s, int number, int amt)
+ 
+// Function to deposit amount in an account
+ 
+void Cash_Deposit()
 {
-    int i = search(list, s, number);
-    if (i ==  - 1)
-    {
-        printf("Record not found");
-    } 
-    else
-    {
-        list[i].balance += amt;
-    }
+   auto int acc_no;
+   float add_money;
+ 
+   printf("Enter account number you want to deposit money:");
+   scanf("%d",&acc_no);
+   printf("\nThe current balance for account %d is %f \n", 
+   acc_no, account[acc_no-1].available_balance);
+   printf("\nEnter money you want to deposit :  ");
+   scanf("%f",&add_money);
+ 
+   while (acc_no=account[acc_no-1].acc_number)
+   {
+         account[acc_no-1].available_balance=
+         account[acc_no-1].available_balance+add_money;
+         printf("\nThe New balance for account %d is %f \n", 
+         acc_no, account[acc_no-1].available_balance);
+         break; 
+   }acc_no++;
 }
-
-void withdraw(struct customer list[], int s, int number, int amt)
+ 
+// Function to withdraw amount from an account
+ 
+void Cash_withdrawl()
 {
-    int i = search(list, s, number);
-    if (i ==  - 1)
-    {
-        printf("Record not found\n");
-    } 
-    else if (list[i].balance < amt)
-    {
-        printf("Insufficient balance\n");
-    }
-    else
-    {
-        list[i].balance -= amt;
-    }
+   auto int acc_no;
+   float withdraw_money;
+ 
+   printf("Enter account number you want to withdraw money:");
+   scanf("%d",&acc_no);
+   printf("\nThe current balance for account %d is %f \n", 
+   acc_no, account[acc_no-1].available_balance);
+   printf("\nEnter money you want to withdraw from account ");
+   scanf("%f",&withdraw_money);
+ 
+   while (acc_no=account[acc_no-1].acc_number)
+   {
+         account[acc_no-1].available_balance=
+         account[acc_no-1].available_balance-withdraw_money;
+         printf("\nThe New balance for account %d is %f \n", 
+         acc_no, account[acc_no-1].available_balance);
+         break; 
+   }acc_no++;
 }
